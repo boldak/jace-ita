@@ -1,11 +1,8 @@
 ---
-title: JACE-ITA. Сервіс ітеративного тренування моделей машинного навчання v1.0.1
+title: JACE-ITA. Сервіс ітеративного тренування моделей машинного навчання
 language_tabs:
   - http: HTTP
   - javascript: JavaScript
-language_clients:
-  - shell: curl
-  - javascript: axios
 toc_footers: []
 includes: []
 search: true
@@ -13,8 +10,6 @@ highlight_theme: darkula
 headingLevel: 2
 
 ---
-
-<!-- Generator: Widdershins v4.0.1 -->
 
 <h1 id="jace-ita-">JACE-ITA. Сервіс ітеративного тренування моделей машинного навчання v1.0.1</h1>
 
@@ -35,17 +30,22 @@ License: <a href="http://localhost:8080/license.html">MIT License</a>
 
 > Code samples
 
-
 ```javascript
-import axios from "axios";
+var data = null;
 
-const options = {method: 'GET', url: 'http://localhost:3001/', headers: {Accept: 'text/html'}};
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
 
-axios.request(options).then(function (response) {
-  console.log(response.data);
-}).catch(function (error) {
-  console.error(error);
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === this.DONE) {
+    console.log(this.responseText);
+  }
 });
+
+xhr.open("GET", "http://localhost:8080/");
+xhr.setRequestHeader("accept", "text/html");
+
+xhr.send(data);
 ```
 
 `GET /`
@@ -58,15 +58,233 @@ axios.request(options).then(function (response) {
 
 > 200 Response
 
-```
-"Not found"
-```
-
 <h3 id="get__-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Успішна відповідь|string|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+<h1 id="jace-ita---">Доступ та відновлення в базі моделей</h1>
+
+## post__model_restore
+
+> Code samples
+
+```javascript
+var data = JSON.stringify({
+  "model": {
+    "name": "string",
+    "locale": "en",
+    "client": "string"
+  }
+});
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === this.DONE) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "http://localhost:8080/model/restore");
+xhr.setRequestHeader("content-type", "application/json");
+xhr.setRequestHeader("accept", "application/json");
+
+xhr.send(data);
+```
+
+`POST /model/restore`
+
+*Відновлення моделі*
+
+Відновлення модель в системі
+
+> Body parameter
+
+```json
+{
+  "model": {
+    "name": "string",
+    "locale": "en",
+    "client": "string"
+  }
+}
+```
+
+<h3 id="post__model_restore-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[req_model_type](#schemareq_model_type)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "result": {
+    "status": "string"
+  }
+}
+```
+
+<h3 id="post__model_restore-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Відповідь сервісу|[response_model_type](#schemaresponse_model_type)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+<h1 id="jace-ita---">Доступ та збереження в базі моделей</h1>
+
+## post__model_save
+
+> Code samples
+
+```javascript
+var data = JSON.stringify({
+  "model": {
+    "name": "string",
+    "locale": "en",
+    "client": "string"
+  }
+});
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === this.DONE) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "http://localhost:8080/model/save");
+xhr.setRequestHeader("content-type", "application/json");
+xhr.setRequestHeader("accept", "application/json");
+
+xhr.send(data);
+```
+
+`POST /model/save`
+
+*Збереження моделі*
+
+Зберегти модель в системі
+
+> Body parameter
+
+```json
+{
+  "model": {
+    "name": "string",
+    "locale": "en",
+    "client": "string"
+  }
+}
+```
+
+<h3 id="post__model_save-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[req_model_type](#schemareq_model_type)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "result": {
+    "status": "string"
+  }
+}
+```
+
+<h3 id="post__model_save-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Відповідь сервісу|[response_model_type](#schemaresponse_model_type)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+<h1 id="jace-ita---">Доступ до бази моделей</h1>
+
+## get__exists_model_{name}
+
+> Code samples
+
+```javascript
+var data = null;
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === this.DONE) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("GET", "http://localhost:8080/exists/model/413ijapd9z8_11_uk");
+xhr.setRequestHeader("accept", "application/json");
+
+xhr.send(data);
+```
+
+`GET /exists/model/{name}`
+
+*Перевірити чи є модель за ім'ям*
+
+Повертає значення чи присутня модель в системі за вказаним ім'ям
+
+<h3 id="get__exists_model_{name}-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|name|path|string|true|Название модели|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "model": {
+    "name": "413ijapd9z8_11",
+    "exists": true
+  }
+}
+```
+
+> 500 Response
+
+```json
+{
+  "error": "string"
+}
+```
+
+<h3 id="get__exists_model_{name}-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Відповідь сервісу|[res_exist_type](#schemares_exist_type)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Відповідь сервісу у разі помилки|[response_error_type](#schemaresponse_error_type)|
 
 <aside class="success">
 This operation does not require authentication
@@ -78,73 +296,57 @@ This operation does not require authentication
 
 > Code samples
 
-
-
 ```javascript
-import axios from "axios";
-
-const options = {
-  method: 'POST',
-  url: 'http://localhost:8080/train',
-  headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-  data: {
-    "model": {
-      "name": "413ijapd9z8_11",
-      "locale": "uk"
-    },
-    "data": [
-      {
-        "id": "f4e650af-d385-4a02-870c-de1d9c849856",
-        "node": "subSentence",
-        "concept": "SYNTAX",
-        "text": " 19 лютого РНБО наклала санкції на кілька десятків фізичних осіб та компаній",
-        "entities": []
+var data = JSON.stringify({
+  "model": {
+    "name": "string",
+    "locale": "en",
+    "losses": [
+      0
+    ],
+    "metrics": {
+      "property1": {
+        "p": 0,
+        "r": 0,
+        "f": 0
       },
-      {
-        "id": "39c7ef57-b87d-43de-b1ac-d0e6c61bccc3",
-        "node": "subSentence",
-        "concept": "SYNTAX",
-        "text": " літак Віталія Хомутинніка",
-        "entities": [
-          {
-            "type": "PERSON",
-            "pos": [
-              15,
-              25
-            ],
-            "nestedIn": [
-              "subSentence"
-            ]
-          }
-        ]
-      },
-      {
-        "id": "ebd3d01e-e0ab-487d-91bc-1f82d53cfcb9",
-        "node": "subSentence",
-        "concept": "SYNTAX",
-        "text": "Змінили реєстрацію і літають далі літаки колишнього нардепа і бізнесмена Віталія Хомутинніка",
-        "entities": [
-          {
-            "type": "PERSON",
-            "pos": [
-              81,
-              91
-            ],
-            "nestedIn": [
-              "subSentence"
-            ]
-          }
-        ]
+      "property2": {
+        "p": 0,
+        "r": 0,
+        "f": 0
       }
-    ]
-  }
-};
-
-axios.request(options).then(function (response) {
-  console.log(response.data);
-}).catch(function (error) {
-  console.error(error);
+    }
+  },
+  "data": [
+    {
+      "text": "string",
+      "entities": [
+        {
+          "type": "string",
+          "pos": [
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ]
 });
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === this.DONE) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "http://localhost:8080/train");
+xhr.setRequestHeader("content-type", "application/json");
+xhr.setRequestHeader("accept", "application/json");
+
+xhr.send(data);
 ```
 
 `POST /train`
@@ -158,49 +360,33 @@ axios.request(options).then(function (response) {
 ```json
 {
   "model": {
-    "name": "413ijapd9z8_11",
-    "locale": "uk"
+    "name": "string",
+    "locale": "en",
+    "losses": [
+      0
+    ],
+    "metrics": {
+      "property1": {
+        "p": 0,
+        "r": 0,
+        "f": 0
+      },
+      "property2": {
+        "p": 0,
+        "r": 0,
+        "f": 0
+      }
+    }
   },
   "data": [
     {
-      "id": "f4e650af-d385-4a02-870c-de1d9c849856",
-      "node": "subSentence",
-      "concept": "SYNTAX",
-      "text": " 19 лютого РНБО наклала санкції на кілька десятків фізичних осіб та компаній",
-      "entities": []
-    },
-    {
-      "id": "39c7ef57-b87d-43de-b1ac-d0e6c61bccc3",
-      "node": "subSentence",
-      "concept": "SYNTAX",
-      "text": " літак Віталія Хомутинніка",
+      "text": "string",
       "entities": [
         {
-          "type": "PERSON",
+          "type": "string",
           "pos": [
-            15,
-            25
-          ],
-          "nestedIn": [
-            "subSentence"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "ebd3d01e-e0ab-487d-91bc-1f82d53cfcb9",
-      "node": "subSentence",
-      "concept": "SYNTAX",
-      "text": "Змінили реєстрацію і літають далі літаки колишнього нардепа і бізнесмена Віталія Хомутинніка",
-      "entities": [
-        {
-          "type": "PERSON",
-          "pos": [
-            81,
-            91
-          ],
-          "nestedIn": [
-            "subSentence"
+            0,
+            0
           ]
         }
       ]
@@ -397,41 +583,56 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
-import axios from "axios";
-
-const options = {
-  method: 'POST',
-  url: 'http://localhost:8080/predict',
-  headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-  data: {
-    "model": {
-      "name": "413ijapd9z8_11",
-      "locale": "uk"
-    },
-    "data": [
-      {
-        "id": "81bb8f24-a72b-4a30-9850-b4fe3bbb1298",
-        "node": "subSentence",
-        "concept": "SYNTAX",
-        "text": " 19 лютого РНБО наклала санкції на кілька десятків фізичних осіб та компаній",
-        "entities": []
+var data = JSON.stringify({
+  "model": {
+    "name": "string",
+    "locale": "en",
+    "losses": [
+      0
+    ],
+    "metrics": {
+      "property1": {
+        "p": 0,
+        "r": 0,
+        "f": 0
       },
-      {
-        "id": "0158c01c-80fe-46fc-a910-a9927c6e2ec6",
-        "node": "subSentence",
-        "concept": "SYNTAX",
-        "text": " літак Віталія Хомутинніка",
-        "entities": []
+      "property2": {
+        "p": 0,
+        "r": 0,
+        "f": 0
       }
-    ]
-  }
-};
-
-axios.request(options).then(function (response) {
-  console.log(response.data);
-}).catch(function (error) {
-  console.error(error);
+    }
+  },
+  "data": [
+    {
+      "text": "string",
+      "entities": [
+        {
+          "type": "string",
+          "pos": [
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ]
 });
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === this.DONE) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "http://localhost:8080/predict");
+xhr.setRequestHeader("content-type", "application/json");
+xhr.setRequestHeader("accept", "application/json");
+
+xhr.send(data);
 ```
 
 `POST /predict`
@@ -445,23 +646,36 @@ axios.request(options).then(function (response) {
 ```json
 {
   "model": {
-    "name": "413ijapd9z8_11",
-    "locale": "uk"
+    "name": "string",
+    "locale": "en",
+    "losses": [
+      0
+    ],
+    "metrics": {
+      "property1": {
+        "p": 0,
+        "r": 0,
+        "f": 0
+      },
+      "property2": {
+        "p": 0,
+        "r": 0,
+        "f": 0
+      }
+    }
   },
   "data": [
     {
-      "id": "81bb8f24-a72b-4a30-9850-b4fe3bbb1298",
-      "node": "subSentence",
-      "concept": "SYNTAX",
-      "text": " 19 лютого РНБО наклала санкції на кілька десятків фізичних осіб та компаній",
-      "entities": []
-    },
-    {
-      "id": "0158c01c-80fe-46fc-a910-a9927c6e2ec6",
-      "node": "subSentence",
-      "concept": "SYNTAX",
-      "text": " літак Віталія Хомутинніка",
-      "entities": []
+      "text": "string",
+      "entities": [
+        {
+          "type": "string",
+          "pos": [
+            0,
+            0
+          ]
+        }
+      ]
     }
   ]
 }
@@ -554,70 +768,56 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
-import axios from "axios";
-
-const options = {
-  method: 'POST',
-  url: 'http://localhost:8080/eval',
-  headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-  data: {
-    "model": {
-      "name": "413ijapd9z8_11",
-      "locale": "uk"
-    },
-    "data": [
-      {
-        "id": "f4e650af-d385-4a02-870c-de1d9c849856",
-        "node": "subSentence",
-        "concept": "SYNTAX",
-        "text": " 19 лютого РНБО наклала санкції на кілька десятків фізичних осіб та компаній",
-        "entities": []
+var data = JSON.stringify({
+  "model": {
+    "name": "string",
+    "locale": "en",
+    "losses": [
+      0
+    ],
+    "metrics": {
+      "property1": {
+        "p": 0,
+        "r": 0,
+        "f": 0
       },
-      {
-        "id": "39c7ef57-b87d-43de-b1ac-d0e6c61bccc3",
-        "node": "subSentence",
-        "concept": "SYNTAX",
-        "text": " літак Віталія Хомутинніка",
-        "entities": [
-          {
-            "type": "PERSON",
-            "pos": [
-              15,
-              25
-            ],
-            "nestedIn": [
-              "subSentence"
-            ]
-          }
-        ]
-      },
-      {
-        "id": "ebd3d01e-e0ab-487d-91bc-1f82d53cfcb9",
-        "node": "subSentence",
-        "concept": "SYNTAX",
-        "text": "Змінили реєстрацію і літають далі літаки колишнього нардепа і бізнесмена Віталія Хомутинніка",
-        "entities": [
-          {
-            "type": "PERSON",
-            "pos": [
-              81,
-              91
-            ],
-            "nestedIn": [
-              "subSentence"
-            ]
-          }
-        ]
+      "property2": {
+        "p": 0,
+        "r": 0,
+        "f": 0
       }
-    ]
-  }
-};
-
-axios.request(options).then(function (response) {
-  console.log(response.data);
-}).catch(function (error) {
-  console.error(error);
+    }
+  },
+  "data": [
+    {
+      "text": "string",
+      "entities": [
+        {
+          "type": "string",
+          "pos": [
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ]
 });
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === this.DONE) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "http://localhost:8080/eval");
+xhr.setRequestHeader("content-type", "application/json");
+xhr.setRequestHeader("accept", "application/json");
+
+xhr.send(data);
 ```
 
 `POST /eval`
@@ -631,49 +831,33 @@ axios.request(options).then(function (response) {
 ```json
 {
   "model": {
-    "name": "413ijapd9z8_11",
-    "locale": "uk"
+    "name": "string",
+    "locale": "en",
+    "losses": [
+      0
+    ],
+    "metrics": {
+      "property1": {
+        "p": 0,
+        "r": 0,
+        "f": 0
+      },
+      "property2": {
+        "p": 0,
+        "r": 0,
+        "f": 0
+      }
+    }
   },
   "data": [
     {
-      "id": "f4e650af-d385-4a02-870c-de1d9c849856",
-      "node": "subSentence",
-      "concept": "SYNTAX",
-      "text": " 19 лютого РНБО наклала санкції на кілька десятків фізичних осіб та компаній",
-      "entities": []
-    },
-    {
-      "id": "39c7ef57-b87d-43de-b1ac-d0e6c61bccc3",
-      "node": "subSentence",
-      "concept": "SYNTAX",
-      "text": " літак Віталія Хомутинніка",
+      "text": "string",
       "entities": [
         {
-          "type": "PERSON",
+          "type": "string",
           "pos": [
-            15,
-            25
-          ],
-          "nestedIn": [
-            "subSentence"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "ebd3d01e-e0ab-487d-91bc-1f82d53cfcb9",
-      "node": "subSentence",
-      "concept": "SYNTAX",
-      "text": "Змінили реєстрацію і літають далі літаки колишнього нардепа і бізнесмена Віталія Хомутинніка",
-      "entities": [
-        {
-          "type": "PERSON",
-          "pos": [
-            81,
-            91
-          ],
-          "nestedIn": [
-            "subSentence"
+            0,
+            0
           ]
         }
       ]
@@ -822,22 +1006,22 @@ This operation does not require authentication
 
 # Schemas
 
-<h2 id="tocS_entity_type">entity_type</h2>
-<!-- backwards compatibility -->
+<h2 id="tocSentity_type">entity_type</h2>
+
 <a id="schemaentity_type"></a>
-<a id="schema_entity_type"></a>
-<a id="tocSentity_type"></a>
-<a id="tocsentity_type"></a>
 
 ```json
 {
-  "type": "PERSON",
-  "pos": [ 81, 91 ]
+  "type": "string",
+  "pos": [
+    0,
+    0
+  ]
 }
 
 ```
 
-Іменована сутність
+*Іменована сутність*
 
 ### Properties
 
@@ -846,30 +1030,27 @@ This operation does not require authentication
 |type|string|true|none|Тип іменованої сутності|
 |pos|array|true|none|Стартова та кінцева позиції|
 
-<h2 id="tocS_text_data_type">text_data_type</h2>
-<!-- backwards compatibility -->
+<h2 id="tocStext_data_type">text_data_type</h2>
+
 <a id="schematext_data_type"></a>
-<a id="schema_text_data_type"></a>
-<a id="tocStext_data_type"></a>
-<a id="tocstext_data_type"></a>
 
 ```json
 {
-  "id": "ebd3d01e-e0ab-487d-91bc-1f82d53cfcb9",
-  "node": "subSentence",
-  "concept": "SYNTAX",
-  "text": "Змінили реєстрацію і літають далі літаки колишнього нардепа і бізнесмена Віталія Хомутинніка",
+  "text": "string",
   "entities": [
     {
-      "type": "PERSON",
-      "pos": [ 81, 91 ]
+      "type": "string",
+      "pos": [
+        0,
+        0
+      ]
     }
   ]
 }
 
 ```
 
-Елемент даних
+*Елемент даних*
 
 ### Properties
 
@@ -878,59 +1059,136 @@ This operation does not require authentication
 |text|string|true|none|Текстові данні|
 |entities|array|true|none|Масив іменованих сутностей|
 
-<h2 id="tocS_req_res_type">req_res_type</h2>
-<!-- backwards compatibility -->
-<a id="schemareq_res_type"></a>
-<a id="schema_req_res_type"></a>
-<a id="tocSreq_res_type"></a>
-<a id="tocsreq_res_type"></a>
+<h2 id="tocSres_exist_type">res_exist_type</h2>
+
+<a id="schemares_exist_type"></a>
 
 ```json
 {
   "model": {
-    "name": "413ijapd9z8_11",
-    "locale": "uk"
+    "name": "string",
+    "locale": true
+  }
+}
+
+```
+
+*Тип даних для обміну з сервісом.*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|model|object|true|none|Наявність моделі|
+|» name|string|true|none|Ім'я моделі|
+|» locale|boolean|false|none|Модель знайдена|
+
+<h2 id="tocSreq_model_type">req_model_type</h2>
+
+<a id="schemareq_model_type"></a>
+
+```json
+{
+  "model": {
+    "name": "string",
+    "locale": "en",
+    "client": "string"
+  }
+}
+
+```
+
+*Тип даних для обміну з сервісом.*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|model|object|true|none|Опис моделі|
+|» name|string|true|none|Ім'я моделі|
+|» locale|string|true|none|Локалізація моделі (мова розпізнавання)|
+|» client|string|true|none|Масив оцінок втрат при тренуванні моделі|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|locale|en|
+|locale|uk|
+|locale|ru|
+
+<h2 id="tocSres_type_with_url">res_type_with_url</h2>
+
+<a id="schemares_type_with_url"></a>
+
+```json
+{
+  "url": "string"
+}
+
+```
+
+*Посилання на модель*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|url|string|true|none|Посилання на модель|
+
+<h2 id="tocSres_type_with_status">res_type_with_status</h2>
+
+<a id="schemares_type_with_status"></a>
+
+```json
+{
+  "status": "string"
+}
+
+```
+
+*Посилання на модель*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|status|string|true|none|Статус завдання|
+
+<h2 id="tocSreq_res_type">req_res_type</h2>
+
+<a id="schemareq_res_type"></a>
+
+```json
+{
+  "model": {
+    "name": "string",
+    "locale": "en",
+    "losses": [
+      0
+    ],
+    "metrics": {
+      "property1": {
+        "p": 0,
+        "r": 0,
+        "f": 0
+      },
+      "property2": {
+        "p": 0,
+        "r": 0,
+        "f": 0
+      }
+    }
   },
   "data": [
     {
-      "id": "f4e650af-d385-4a02-870c-de1d9c849856",
-      "node": "subSentence",
-      "concept": "SYNTAX",
-      "text": " 19 лютого РНБО наклала санкції на кілька десятків фізичних осіб та компаній",
-      "entities": []
-    },
-    {
-      "id": "39c7ef57-b87d-43de-b1ac-d0e6c61bccc3",
-      "node": "subSentence",
-      "concept": "SYNTAX",
-      "text": " літак Віталія Хомутинніка",
+      "text": "string",
       "entities": [
         {
-          "type": "PERSON",
+          "type": "string",
           "pos": [
-            15,
-            25
-          ],
-          "nestedIn": [
-            "subSentence"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "ebd3d01e-e0ab-487d-91bc-1f82d53cfcb9",
-      "node": "subSentence",
-      "concept": "SYNTAX",
-      "text": "Змінили реєстрацію і літають далі літаки колишнього нардепа і бізнесмена Віталія Хомутинніка",
-      "entities": [
-        {
-          "type": "PERSON",
-          "pos": [
-            81,
-            91
-          ],
-          "nestedIn": [
-            "subSentence"
+            0,
+            0
           ]
         }
       ]
@@ -940,7 +1198,7 @@ This operation does not require authentication
 
 ```
 
-Тип даних для обміну з сервісом.
+*Тип даних для обміну з сервісом.*
 
 ### Properties
 
@@ -955,7 +1213,7 @@ This operation does not require authentication
 |»»» p|number|false|none|none|
 |»»» r|number|false|none|none|
 |»»» f|number|false|none|none|
-|data|array|true|none|none|
+|»» data|array|true|none|none|
 
 #### Enumerated Values
 
@@ -965,12 +1223,9 @@ This operation does not require authentication
 |locale|uk|
 |locale|ru|
 
-<h2 id="tocS_response_error_type">response_error_type</h2>
-<!-- backwards compatibility -->
+<h2 id="tocSresponse_error_type">response_error_type</h2>
+
 <a id="schemaresponse_error_type"></a>
-<a id="schema_response_error_type"></a>
-<a id="tocSresponse_error_type"></a>
-<a id="tocsresponse_error_type"></a>
 
 ```json
 {
@@ -978,7 +1233,8 @@ This operation does not require authentication
 }
 
 ```
-Помилкова відповідь
+
+*Помилкова відповідь*
 
 ### Properties
 
@@ -986,15 +1242,18 @@ This operation does not require authentication
 |---|---|---|---|---|
 |error|string|true|none|Повідомлення про помилку|
 
-<h2 id="tocS_response_warning_type">response_warning_type</h2>
-<!-- backwards compatibility -->
+<h2 id="tocSresponse_warning_type">response_warning_type</h2>
+
 <a id="schemaresponse_warning_type"></a>
-<a id="schema_response_warning_type"></a>
-<a id="tocSresponse_warning_type"></a>
-<a id="tocsresponse_warning_type"></a>
 
+```json
+{
+  "warning": "string"
+}
 
-Попереджувальна відповідь
+```
+
+*Попереджувальна відповідь*
 
 ### Properties
 
@@ -1002,44 +1261,157 @@ This operation does not require authentication
 |---|---|---|---|---|
 |warning|string|true|none|Повідомлення про попередження|
 
-<h2 id="tocS_response_type">response_type</h2>
-<!-- backwards compatibility -->
-<a id="schemaresponse_type"></a>
-<a id="schema_response_type"></a>
-<a id="tocSresponse_type"></a>
-<a id="tocsresponse_type"></a>
+<h2 id="tocSresponse_type">response_type</h2>
 
+<a id="schemaresponse_type"></a>
+
+```json
+{
+  "model": {
+    "name": "string",
+    "locale": "en",
+    "losses": [
+      0
+    ],
+    "metrics": {
+      "property1": {
+        "p": 0,
+        "r": 0,
+        "f": 0
+      },
+      "property2": {
+        "p": 0,
+        "r": 0,
+        "f": 0
+      }
+    }
+  },
+  "data": [
+    {
+      "text": "string",
+      "entities": [
+        {
+          "type": "string",
+          "pos": [
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "result": {
+    "model": {
+      "name": "string",
+      "locale": "en",
+      "losses": [
+        0
+      ],
+      "metrics": {
+        "property1": {
+          "p": 0,
+          "r": 0,
+          "f": 0
+        },
+        "property2": {
+          "p": 0,
+          "r": 0,
+          "f": 0
+        }
+      }
+    },
+    "data": [
+      {
+        "text": "string",
+        "entities": [
+          {
+            "type": "string",
+            "pos": [
+              0,
+              0
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+
+```
 
 ### Properties
 
-allOf
+*allOf*
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |*anonymous*|[req_res_type](#schemareq_res_type)|false|none|Описує структуру даних, яка передається в сервіс в якості завдання. Успішний результат оброблення повертається сервісом в такій само структурі.|
 
-and
+*and*
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |*anonymous*|object|false|none|none|
 |» result|any|false|none|Результат оброблення|
 
-oneOf
+*oneOf*
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |»» *anonymous*|[req_res_type](#schemareq_res_type)|false|none|Описує структуру даних, яка передається в сервіс в якості завдання. Успішний результат оброблення повертається сервісом в такій само структурі.|
 
-xor
+*xor*
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |»» *anonymous*|[response_error_type](#schemaresponse_error_type)|false|none|none|
 
-xor
+*xor*
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |»» *anonymous*|[response_warning_type](#schemaresponse_warning_type)|false|none|none|
+
+<h2 id="tocSresponse_model_type">response_model_type</h2>
+
+<a id="schemaresponse_model_type"></a>
+
+```json
+{
+  "result": {
+    "status": "string"
+  }
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|result|any|false|none|Результат оброблення|
+
+*oneOf*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[res_type_with_status](#schemares_type_with_status)|false|none|none|
+
+*xor*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[res_type_with_url](#schemares_type_with_url)|false|none|none|
+
+*xor*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[response_error_type](#schemaresponse_error_type)|false|none|none|
+
+*xor*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[response_warning_type](#schemaresponse_warning_type)|false|none|none|
 
